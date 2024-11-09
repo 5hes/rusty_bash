@@ -29,6 +29,7 @@ impl ShellCore {
         self.builtins.insert("complete".to_string(), completion::complete);
         self.builtins.insert("eval".to_string(), eval);
         self.builtins.insert("exit".to_string(), exit);
+        self.builtins.insert("export".to_string(), export);
         self.builtins.insert("false".to_string(), false_);
         self.builtins.insert("fg".to_string(), job_commands::fg);
         self.builtins.insert("history".to_string(), history::history);
@@ -85,6 +86,11 @@ pub fn exit(core: &mut ShellCore, args: &mut Vec<String>) -> i32 {
         core.data.set_layer_param("?", &args[1], 0);
     }
     exit::normal(core)
+}
+
+pub fn export(core: &mut ShellCore, args: &mut Vec<String>) -> i32 {
+    dbg!("{:?}", &args);
+    0
 }
 
 pub fn false_(_: &mut ShellCore, _: &mut Vec<String>) -> i32 {
