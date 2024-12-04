@@ -1,0 +1,53 @@
+name: Build
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "Build binary for aarch64"
+        required: true
+        type: boolean
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out
+      uses: actions/checkout@v4
+
+    - name: Package install
+      run: |
+        sudo apt-get update
+        sudo apt-get install musl-tools
+
+    - name: Set up rust toolchain 
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        toolchain: stable
+        targets: aarch64-unknown-linux-musl
+
+    - name: Enable cargo cache
+      uses: Swatinem/rust-cache@v2
+      with:
+        key: "aarch64-unknown-linux-musl"
+
+    - name: Install cross-compilation toolchain
+      uses: taiki-e/install-action@v2
+      with:
+        tool: cross
+
+    - name: "Upload binaries"
+      uses: actions/upload-artifact@v4
+      with:
+        name: aarch64
+        path: target/aarch64-unknown-linux-musl/release/*
+
+
+
+
+
+
+
+    
