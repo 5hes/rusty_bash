@@ -38,6 +38,9 @@ jobs:
       with:
         tool: cross
 
+    - name: build
+      run: cargo build --release --target=aarch64-unknown-linux-musl
+
     - name: "Upload binaries"
       uses: actions/upload-artifact@v4
       with:
