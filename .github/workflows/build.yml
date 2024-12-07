@@ -41,6 +41,13 @@ jobs:
     - name: build
       run: cross build --release --target=aarch64-unknown-linux-musl
 
+    - name: Check
+      run: |
+        cd target/aarch64-unknown-linux-musl/
+        ls -ltrah
+        ls -ltra
+        tree
+        
     - name: "Upload binaries"
       uses: actions/upload-artifact@v4
       with:
